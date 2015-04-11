@@ -18,7 +18,7 @@ namespace PokeWrapper.TaskRunners
     class PokemonTaskRunner
     {
         static void Main(string[] args)
-        {            
+        {
             RunAsync().Wait();
         }
 
