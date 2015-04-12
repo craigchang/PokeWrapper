@@ -64,16 +64,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContracts\AbilityDataContract.cs" />
+    <Compile Include="DataContracts\DataContractBase.cs" />
     <Compile Include="DataContracts\DescriptionDataContract.cs" />
     <Compile Include="DataContracts\EggGroupDataContract.cs" />
     <Compile Include="DataContracts\EvolutionDataContract.cs" />
+    <Compile Include="DataContracts\GameDataContract.cs" />
     <Compile Include="DataContracts\MetaDataContract.cs" />
     <Compile Include="DataContracts\MoveDataContract.cs" />
     <Compile Include="DataContracts\PokedexDataContract.cs" />
     <Compile Include="DataContracts\PokemonDataContract.cs" />
     <Compile Include="DataContracts\SpriteDataContract.cs" />
     <Compile Include="DataContracts\TypeDataContract.cs" />
-    <Compile Include="TaskRunners\PokemonTaskRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskRunners\PokedexTaskRunner.cs" />
   </ItemGroup>
