@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PokeWrapper.DataContacts;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,41 +16,40 @@ namespace PokeWrapper.DataContracts
     public abstract class DataContractBase
     {
         public const string BaseUrl = "http://pokeapi.co/";
+        private const int MaxResponseContentBufferSize = 256000;
+
+        private HttpClient httpClient;
+        private HttpResponseMessage response;
+        private HttpClient pokeApiHttpClient;
+        private static MediaTypeWithQualityHeaderValue mediaType = new MediaTypeWithQualityHeaderValue("application/json");
+
+        public DataContractBase(){}
 
         public string HttpGet(string url) {
-            HttpClient httpClient = getHttpClient();
-
+            
             try
             {
-                HttpResponseMessage response = httpClient.GetAsync(url).Result;
+                pokeApiHttpClient = this.getHttpClientSettings();
+                response = pokeApiHttpClient.GetAsync(url).Result;
                 response.EnsureSuccessStatusCode();
-
                 return response.Content.ReadAsStringAsync().Result;
-            }
-            catch (HttpRequestException hre)
-            {
-                throw hre;
             }
             catch (Exception e)
             {
                 throw e;
             }
-            finally
-            {
-
-            }
         }
 
-        public HttpClient getHttpClient()
+        public HttpClient getHttpClientSettings()
         {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(BaseUrl);
 
-            httpClient.MaxResponseContentBufferSize = 256000;
+            httpClient.MaxResponseContentBufferSize = MaxResponseContentBufferSize;
             httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Accept.Add(mediaType);
 
             return httpClient;
-        }
+        }      
     }
 }

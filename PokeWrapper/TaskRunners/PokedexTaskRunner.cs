@@ -18,7 +18,22 @@ namespace PokeWrapper.TaskRunners
     {
         static void Main(string[] args)
         {
+            DataContractGenerator dcf = new DataContractGenerator();
+            PokedexDataContract pokedex1 = (PokedexDataContract)dcf.getInstance("Pokedex", string.Empty);
+
             PokedexDataContract pokedex = new PokedexDataContract();
+            List<PokemonDataContract> pokemonList = pokedex.httpGetPokemonList();
+
+            foreach (PokemonDataContract pokemon in pokemonList)
+            {
+                List<AbilityDataContract> abilities = pokemon.httpGetPokemonAbilities();
+                List<DescriptionDataContract> descriptions = pokemon.httpGetPokemonDescriptions();
+                List<EggGroupDataContract> eggGroups = pokemon.httpGetPokemonEggGroups();
+                List<EvolutionDataContract> evolutions = pokemon.httpGetPokemonEvolutions();
+                List<MoveDataContract> moves = pokemon.httpGetPokemonMoves();
+                List<SpriteDataContract> sprites = pokemon.httpGetPokemonSprites();
+                List<TypeDataContract> types = pokemon.httpGetPokemonTypes();
+            }
         }
     }
 }

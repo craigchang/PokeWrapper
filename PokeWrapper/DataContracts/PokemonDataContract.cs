@@ -19,13 +19,13 @@ namespace PokeWrapper.DataContacts
 
         public PokemonDataContract(PokemonDataContract pokemon)
         {
-            this.Abilities = new List<AbilityDataContract>();
-            this.Descriptions = new List<DescriptionDataContract>();
-            this.EggGroups = new List<EggGroupDataContract>();
-            this.Evolutions = new List<EvolutionDataContract>();
-            this.Moves = new List<MoveDataContract>();
-            this.Sprites = new List<SpriteDataContract>();
-            this.Types = new List<TypeDataContract>();
+            this.AbilityResourceUriList = new List<ResourceUriDataContract>();
+            this.DescriptionResourceUriList = new List<ResourceUriDataContract>();
+            this.EggGroupResourceUriList = new List<ResourceUriDataContract>();
+            this.EvolutionResourceUriList = new List<ResourceUriDataContract>();
+            this.MoveResourceUriList = new List<ResourceUriDataContract>();
+            this.SpriteResourceUriList = new List<ResourceUriDataContract>();
+            this.TypeResourceUriList = new List<ResourceUriDataContract>();
 
             try
             {
@@ -44,11 +44,15 @@ namespace PokeWrapper.DataContacts
         }
 
         public void SetPokemonDataContract(PokemonDataContract pokemon) {
+            this.AbilityResourceUriList = pokemon.AbilityResourceUriList;
             this.Attack = pokemon.Attack;
             this.CatchRate = pokemon.CatchRate;
             this.Created = pokemon.Created;
             this.Defense = pokemon.Defense;
+            this.DescriptionResourceUriList = pokemon.DescriptionResourceUriList;
             this.EggCycles = pokemon.EggCycles;
+            this.EggGroupResourceUriList = pokemon.EggGroupResourceUriList;
+            this.EvolutionResourceUriList = pokemon.EvolutionResourceUriList;
             this.EvYield = pokemon.EvYield;
             this.Exp = pokemon.Exp;
             this.GrowthRate = pokemon.GrowthRate;
@@ -57,6 +61,7 @@ namespace PokeWrapper.DataContacts
             this.Hp = pokemon.Hp;
             this.MaleFemaleRatio = pokemon.MaleFemaleRatio;
             this.Modified = pokemon.Modified;
+            this.MoveResourceUriList = pokemon.MoveResourceUriList;
             this.Name = pokemon.Name;
             this.NationalId = pokemon.NationalId;
             this.PkdxId = pokemon.PkdxId;
@@ -64,56 +69,123 @@ namespace PokeWrapper.DataContacts
             this.SpAtk = pokemon.SpAtk;
             this.SpDef = pokemon.SpDef;
             this.Speed = pokemon.Speed;
+            this.SpriteResourceUriList = pokemon.SpriteResourceUriList;
             this.Total = pokemon.Total;
+            this.TypeResourceUriList = pokemon.TypeResourceUriList;
             this.Weight = pokemon.Weight;
+        }
 
-            foreach (AbilityDataContract ability in pokemon.Abilities) 
+        public List<AbilityDataContract> httpGetPokemonAbilities()
+        {
+            List<AbilityDataContract> abilities = new List<AbilityDataContract>();
+            foreach (var resourceUri in AbilityResourceUriList)
             {
-                AbilityDataContract abilityEntry = new AbilityDataContract(ability);
-                this.Abilities.Add(abilityEntry);
-            }
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(AbilityDataContract));
 
-            foreach (DescriptionDataContract description in pokemon.Descriptions)
-            {
-                DescriptionDataContract descriptionEntry = new DescriptionDataContract(description);
-                this.Descriptions.Add(descriptionEntry);
+                var ability = (AbilityDataContract)jsonSerializer.ReadObject(jsonStream);
+                abilities.Add(ability);
             }
+            return abilities;
+        }
 
-            foreach (EggGroupDataContract eggGroup in pokemon.EggGroups)
+        public List<DescriptionDataContract> httpGetPokemonDescriptions()
+        {
+            List<DescriptionDataContract> descriptions = new List<DescriptionDataContract>();
+            foreach (var resourceUri in DescriptionResourceUriList)
             {
-                EggGroupDataContract eggGroupEntry = new EggGroupDataContract(eggGroup);
-                this.EggGroups.Add(eggGroup);
-            }
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(DescriptionDataContract));
 
-            foreach (EvolutionDataContract evolution in pokemon.Evolutions)
-            {
-                EvolutionDataContract evolutionEntry = new EvolutionDataContract(evolution);
-                this.Evolutions.Add(evolutionEntry);
+                var description = (DescriptionDataContract)jsonSerializer.ReadObject(jsonStream);
+                descriptions.Add(description);
             }
+            return descriptions;
+        }
 
-            foreach (MoveDataContract move in pokemon.Moves)
+        public List<EggGroupDataContract> httpGetPokemonEggGroups()
+        {
+            List<EggGroupDataContract> eggGroups = new List<EggGroupDataContract>();
+            foreach (var resourceUri in EggGroupResourceUriList)
             {
-                MoveDataContract moveEntry = new MoveDataContract(move);
-                moveEntry.Level = move.Level;
-                moveEntry.LearnType = move.LearnType;
-                this.Moves.Add(moveEntry);
-            }
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(EggGroupDataContract));
 
-            foreach (SpriteDataContract sprite in pokemon.Sprites)
-            {
-                SpriteDataContract spriteEntry = new SpriteDataContract(sprite);
-                this.Sprites.Add(spriteEntry);
+                var eggGroup = (EggGroupDataContract)jsonSerializer.ReadObject(jsonStream);
+                eggGroups.Add(eggGroup);
             }
+            return eggGroups;
+        }
 
-            foreach (TypeDataContract type in pokemon.Types)
+        public List<EvolutionDataContract> httpGetPokemonEvolutions()
+        {
+            List<EvolutionDataContract> evolutions = new List<EvolutionDataContract>();
+            foreach (var resourceUri in EvolutionResourceUriList)
             {
-                TypeDataContract typeEntry = new TypeDataContract(type);
-                this.Types.Add(typeEntry);
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(EvolutionDataContract));
+
+                var evolution = (EvolutionDataContract)jsonSerializer.ReadObject(jsonStream);
+                evolutions.Add(evolution);
             }
+            return evolutions;
+        }
+
+        public List<MoveDataContract> httpGetPokemonMoves()
+        {
+            //Integer i = new Integer(2);
+            //int j = i;
+            List<MoveDataContract> moves = new List<MoveDataContract>();
+            foreach (var resourceUri in MoveResourceUriList)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(MoveDataContract));
+
+                var move = (MoveDataContract)jsonSerializer.ReadObject(jsonStream);
+                move.Level = resourceUri.Level;
+                move.LearnType = resourceUri.LearnType;
+                moves.Add(move);
+            }
+            return moves;
+        }
+
+        public List<SpriteDataContract> httpGetPokemonSprites()
+        {
+            List<SpriteDataContract> abilities = new List<SpriteDataContract>();
+            foreach (var resourceUri in SpriteResourceUriList)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(SpriteDataContract));
+
+                var ability = (SpriteDataContract)jsonSerializer.ReadObject(jsonStream);
+                abilities.Add(ability);
+            }
+            return abilities;
+        }
+
+        public List<TypeDataContract> httpGetPokemonTypes()
+        {
+            List<TypeDataContract> types = new List<TypeDataContract>();
+            foreach (var resourceUri in TypeResourceUriList)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
+
+                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                types.Add(type);
+            }
+            return types;
         }
 
         [DataMember(Name = "abilities")]
-        public List<AbilityDataContract> Abilities;
+        public List<ResourceUriDataContract> AbilityResourceUriList;
 
         [DataMember(Name = "attack")]
         public int Attack { get; set; }
@@ -128,19 +200,19 @@ namespace PokeWrapper.DataContacts
         public int Defense { get; set; }
 
         [DataMember(Name = "descriptions")]
-        public List<DescriptionDataContract> Descriptions { get; set; }
+        public List<ResourceUriDataContract> DescriptionResourceUriList { get; set; }
 
         [DataMember(Name = "egg_cycles")]
         public int EggCycles { get; set; }
 
         [DataMember(Name = "egg_groups")]
-        public List<EggGroupDataContract> EggGroups { get; set; }
+        public List<ResourceUriDataContract> EggGroupResourceUriList { get; set; }
 
         [DataMember(Name = "ev_yield")]
         public string EvYield { get; set; }
 
         [DataMember(Name = "evolutions")]
-        public List<EvolutionDataContract> Evolutions { get; set; }
+        public List<ResourceUriDataContract> EvolutionResourceUriList { get; set; }
 
         [DataMember(Name = "exp")]
         public int Exp { get; set; }
@@ -164,7 +236,7 @@ namespace PokeWrapper.DataContacts
         public string Modified { get; set; }
 
         [DataMember(Name = "moves")]
-        public List<MoveDataContract> Moves { get; set; }
+        public List<ResourceUriDataContract> MoveResourceUriList { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
@@ -191,13 +263,13 @@ namespace PokeWrapper.DataContacts
         public int Speed { get; set; }
 
         [DataMember(Name = "sprites")]
-        public List<SpriteDataContract> Sprites { get; set; }
+        public List<ResourceUriDataContract> SpriteResourceUriList { get; set; }
 
         [DataMember(Name = "total")]
         public int Total { get; set; }
 
         [DataMember(Name = "types")]
-        public List<TypeDataContract> Types { get; set; }
+        public List<ResourceUriDataContract> TypeResourceUriList { get; set; }
 
         [DataMember(Name = "weight")]
         public string Weight { get; set; }
