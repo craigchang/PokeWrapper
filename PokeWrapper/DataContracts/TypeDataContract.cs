@@ -33,18 +33,89 @@ namespace PokeWrapper.DataContracts
         {
             this.Created = typeData.Created;
             this.Id = typeData.Id;
-            this.Created = typeData.Created;
+            this.Ineffective = typeData.Ineffective;
             this.Modified = typeData.Modified;
             this.Name = typeData.Name;
-            this.Modified = typeData.Modified;
-            this.Name = typeData.Name;
+            this.NoEffect = typeData.NoEffect;
+            this.Resistance = typeData.Resistance;
             this.ResourceUri = typeData.ResourceUri;
+            this.SuperEffective = typeData.SuperEffective;
+            this.Weakness = typeData.Weakness;
+        }
 
-            // ineffective list
-            // noeffect list
-            // resistence list
-            // supereffective list
-            // weakness list
+        public List<TypeDataContract> httpGetIneffectiveTypes()
+        {
+            List<TypeDataContract> types = new List<TypeDataContract>();
+            foreach (var resourceUri in Ineffective)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
+
+                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                types.Add(type);
+            }
+            return types;
+        }
+
+        public List<TypeDataContract> httpGetNoEffectTypes()
+        {
+            List<TypeDataContract> types = new List<TypeDataContract>();
+            foreach (var resourceUri in NoEffect)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
+
+                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                types.Add(type);
+            }
+            return types;
+        }
+
+        public List<TypeDataContract> httpGetResistanceTypes()
+        {
+            List<TypeDataContract> types = new List<TypeDataContract>();
+            foreach (var resourceUri in Resistance)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
+
+                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                types.Add(type);
+            }
+            return types;
+        }
+
+        public List<TypeDataContract> httpGetSuperEffectiveTypes()
+        {
+            List<TypeDataContract> types = new List<TypeDataContract>();
+            foreach (var resourceUri in SuperEffective)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
+
+                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                types.Add(type);
+            }
+            return types;
+        }
+
+        public List<TypeDataContract> httpGetWeaknessTypes()
+        {
+            List<TypeDataContract> types = new List<TypeDataContract>();
+            foreach (var resourceUri in Weakness)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
+
+                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                types.Add(type);
+            }
+            return types;
         }
 
         [DataMember(Name = "created")]
@@ -54,7 +125,7 @@ namespace PokeWrapper.DataContracts
         public int Id { get; set; }
 
         [DataMember(Name = "ineffective")]
-        public List<TypeDataContract> Ineffective { get; set; }
+        public List<ResourceUriDataContract> Ineffective { get; set; }
 
         [DataMember(Name = "modified")]
         public string Modified { get; set; }
@@ -63,18 +134,18 @@ namespace PokeWrapper.DataContracts
         public string Name;
 
         [DataMember(Name = "no_effect")]
-        public List<TypeDataContract> NoEffect { get; set; }
+        public List<ResourceUriDataContract> NoEffect { get; set; }
 
         [DataMember(Name = "resistance")]
-        public List<TypeDataContract> Resistance { get; set; }
+        public List<ResourceUriDataContract> Resistance { get; set; }
 
         [DataMember(Name = "resource_uri")]
         public string ResourceUri;
 
         [DataMember(Name = "super_effective")]
-        public List<TypeDataContract> SuperEffective { get; set; }
+        public List<ResourceUriDataContract> SuperEffective { get; set; }
 
         [DataMember(Name = "weakness")]
-        public List<TypeDataContract> Weakness { get; set; }
+        public List<ResourceUriDataContract> Weakness { get; set; }
     }
 }

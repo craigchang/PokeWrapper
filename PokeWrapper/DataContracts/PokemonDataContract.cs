@@ -137,8 +137,6 @@ namespace PokeWrapper.DataContacts
 
         public List<MoveDataContract> httpGetPokemonMoves()
         {
-            //Integer i = new Integer(2);
-            //int j = i;
             List<MoveDataContract> moves = new List<MoveDataContract>();
             foreach (var resourceUri in MoveResourceUriList)
             {
@@ -185,7 +183,7 @@ namespace PokeWrapper.DataContacts
         }
 
         [DataMember(Name = "abilities")]
-        public List<ResourceUriDataContract> AbilityResourceUriList;
+        public List<ResourceUriDataContract> AbilityResourceUriList { get; set; }
 
         [DataMember(Name = "attack")]
         public int Attack { get; set; }

@@ -1,6 +1,7 @@
 ﻿using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -14,7 +15,7 @@ namespace PokeWrapper.DataContracts
     {
         public EggGroupDataContract(EggGroupDataContract description)
         {
-            this.Pokemon = new List<PokemonDataContract>();
+            this.PokemonResourceUriList = new List<ResourceUriDataContract>();
 
             try
             {
@@ -38,10 +39,25 @@ namespace PokeWrapper.DataContracts
             this.Id = eggGroupData.Id;
             this.Modified = eggGroupData.Modified;
             this.Name = eggGroupData.Name;
-            this.Pokemon = eggGroupData.Pokemon;
+            this.PokemonResourceUriList = eggGroupData.PokemonResourceUriList;
             this.ResourceUri = eggGroupData.ResourceUri;
-            
-            // Games
+        }
+
+        public List<PokemonDataContract> httpGetPokemonList()
+        {
+            List<PokemonDataContract> pokemonList = new List<PokemonDataContract>();
+            foreach (var resourceUri in PokemonResourceUriList)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
+
+                var pokemon = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
+                pokemonList.Add(pokemon);
+
+                Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);
+            }
+            return pokemonList;
         }
 
         [DataMember(Name = "created")]
@@ -57,7 +73,7 @@ namespace PokeWrapper.DataContracts
         public string Name { get; set; }
 
         [DataMember(Name = "pokemon")]
-        public List<PokemonDataContract> Pokemon { get; set; }
+        public List<ResourceUriDataContract> PokemonResourceUriList { get; set; }
 
         [DataMember(Name = "resource_uri")]
         public string ResourceUri;

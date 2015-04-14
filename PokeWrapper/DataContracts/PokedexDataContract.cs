@@ -53,11 +53,6 @@ namespace PokeWrapper.DataContracts
             return pokemonList;
         }
 
-        //public void sortPokemonList()
-        //{
-        //    this.PokemonList = this.PokemonList.OrderBy(p => p.PkdxId).ToList();
-        //}
-
         [DataMember(Name = "created")]
         public string Created { get; set; }
 

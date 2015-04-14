@@ -1,6 +1,7 @@
 ﻿using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -37,9 +38,23 @@ namespace PokeWrapper.DataContracts
             this.Image = spriteData.Image;
             this.Modified = spriteData.Modified;
             this.Name = spriteData.Name;
-            this.Pokemon = spriteData.Pokemon;
+            this.PokemonResourceUri = spriteData.PokemonResourceUri;
             this.Name = spriteData.Name;
             this.ResourceUri = spriteData.ResourceUri;
+        }
+
+        public PokemonDataContract httpGetPokemon()
+        {
+            PokemonDataContract pokemon = new PokemonDataContract();
+            string jsonStr = base.HttpGet(PokemonResourceUri.ResourceUri);
+            MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
+
+            pokemon = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
+
+            Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);
+
+            return pokemon;
         }
 
         [DataMember(Name = "created")]
@@ -58,7 +73,7 @@ namespace PokeWrapper.DataContracts
         public string Name;
 
         [DataMember(Name = "pokemon")]
-        public PokemonDataContract Pokemon { get; set; }
+        public ResourceUriDataContract PokemonResourceUri { get; set; }
 
         [DataMember(Name = "resource_uri")]
         public string ResourceUri;

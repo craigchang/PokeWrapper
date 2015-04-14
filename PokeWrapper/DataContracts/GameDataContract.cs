@@ -22,7 +22,7 @@ namespace PokeWrapper.DataContracts
         public string Modified { get; set; }
 
         [DataMember(Name = "name")]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [DataMember(Name = "release_year")]
         public int ReleaseYear { get; set; }

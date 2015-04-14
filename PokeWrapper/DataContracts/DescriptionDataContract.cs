@@ -1,6 +1,7 @@
 ﻿using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -14,7 +15,7 @@ namespace PokeWrapper.DataContracts
     {
         public DescriptionDataContract(DescriptionDataContract description)
         {
-            this.Games = new List<GameDataContract>();
+            this.GameResourceUriList = new List<ResourceUriDataContract>();
 
             try
             {
@@ -36,13 +37,43 @@ namespace PokeWrapper.DataContracts
         {
             this.Created = descriptionData.Created;
             this.Description = descriptionData.Description;
+            this.GameResourceUriList = descriptionData.GameResourceUriList;
             this.Id = descriptionData.Id;
             this.Modified = descriptionData.Modified;
             this.Name = descriptionData.Name;
-            this.Pokemon = descriptionData.Pokemon;
+            this.PokemonResourceUri = descriptionData.PokemonResourceUri;
             this.ResourceUri = descriptionData.ResourceUri;
-            
-            // Games
+        }
+
+        public List<GameDataContract> httpGetGameList()
+        {
+            List<GameDataContract> gameList = new List<GameDataContract>();
+            foreach (var resourceUri in GameResourceUriList)
+            {
+                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
+                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(GameDataContract));
+
+                var game = (GameDataContract)jsonSerializer.ReadObject(jsonStream);
+                gameList.Add(game);
+
+                Debug.WriteLine("Game Id: " + game.Id + ", Game Name: " + game.Name);
+            }
+            return gameList;
+        }
+
+        public PokemonDataContract httpGetPokemon()
+        {
+            PokemonDataContract pokemon = new PokemonDataContract();
+            string jsonStr = base.HttpGet(PokemonResourceUri.ResourceUri);
+            MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
+
+            pokemon = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
+
+            Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);
+
+            return pokemon;
         }
 
         [DataMember(Name = "created")]
@@ -52,7 +83,7 @@ namespace PokeWrapper.DataContracts
         public string Description { get; set; }
 
         [DataMember(Name = "games")]
-        public List<GameDataContract> Games { get; set; }
+        public List<ResourceUriDataContract> GameResourceUriList { get; set; }
 
         [DataMember(Name = "id")]
         public int Id { get; set; }
@@ -64,7 +95,7 @@ namespace PokeWrapper.DataContracts
         public string Name { get; set; }
 
         [DataMember(Name = "pokemon")]
-        public PokemonDataContract Pokemon { get; set; }
+        public ResourceUriDataContract PokemonResourceUri { get; set; }
 
         [DataMember(Name = "resource_uri")]
         public string ResourceUri { get; set; }

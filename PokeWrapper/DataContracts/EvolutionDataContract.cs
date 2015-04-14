@@ -35,8 +35,6 @@ namespace PokeWrapper.DataContracts
             this.Method = evolutionData.Method;
             this.To = evolutionData.To;
             this.ResourceUri = evolutionData.ResourceUri;
-            
-            // Games
         }
 
         [DataMember(Name = "level")]
