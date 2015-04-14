@@ -22,7 +22,7 @@ namespace PokeWrapper.DataContacts
             this.AbilityResourceUriList = new List<ResourceUriDataContract>();
             this.DescriptionResourceUriList = new List<ResourceUriDataContract>();
             this.EggGroupResourceUriList = new List<ResourceUriDataContract>();
-            this.EvolutionResourceUriList = new List<ResourceUriDataContract>();
+            this.EvolutionList = new List<EvolutionDataContract>();
             this.MoveResourceUriList = new List<ResourceUriDataContract>();
             this.SpriteResourceUriList = new List<ResourceUriDataContract>();
             this.TypeResourceUriList = new List<ResourceUriDataContract>();
@@ -52,7 +52,7 @@ namespace PokeWrapper.DataContacts
             this.DescriptionResourceUriList = pokemon.DescriptionResourceUriList;
             this.EggCycles = pokemon.EggCycles;
             this.EggGroupResourceUriList = pokemon.EggGroupResourceUriList;
-            this.EvolutionResourceUriList = pokemon.EvolutionResourceUriList;
+            this.EvolutionList = pokemon.EvolutionList;
             this.EvYield = pokemon.EvYield;
             this.Exp = pokemon.Exp;
             this.GrowthRate = pokemon.GrowthRate;
@@ -118,21 +118,6 @@ namespace PokeWrapper.DataContacts
                 eggGroups.Add(eggGroup);
             }
             return eggGroups;
-        }
-
-        public List<EvolutionDataContract> httpGetPokemonEvolutions()
-        {
-            List<EvolutionDataContract> evolutions = new List<EvolutionDataContract>();
-            foreach (var resourceUri in EvolutionResourceUriList)
-            {
-                string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(EvolutionDataContract));
-
-                var evolution = (EvolutionDataContract)jsonSerializer.ReadObject(jsonStream);
-                evolutions.Add(evolution);
-            }
-            return evolutions;
         }
 
         public List<MoveDataContract> httpGetPokemonMoves()
@@ -210,7 +195,7 @@ namespace PokeWrapper.DataContacts
         public string EvYield { get; set; }
 
         [DataMember(Name = "evolutions")]
-        public List<ResourceUriDataContract> EvolutionResourceUriList { get; set; }
+        public List<EvolutionDataContract> EvolutionList { get; set; }
 
         [DataMember(Name = "exp")]
         public int Exp { get; set; }
