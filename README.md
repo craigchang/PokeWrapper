@@ -60,7 +60,7 @@ Each data contract object extends a base model (DataContractBase) that provides 
 1. Caching/Database/Flatfile storage to reduce number of HTTP GET Requests to the pokeapi.co server (for more information see the [API documentation] (http://pokeapi.co/docs/).
 2. Exception Handling to cover all possible user cases.
 3. Provide more documentation on the Wrapper API.
-4. 
+
 ### Latest Comments
 
 v.0.0.1 (4/15/2015) - Completed DataContract objects and created a DataContract Generator. Currently in the process of learning C# and .NET environment.
