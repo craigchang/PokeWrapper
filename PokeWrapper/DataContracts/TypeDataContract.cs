@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,23 +12,7 @@ namespace PokeWrapper.DataContracts
     [DataContract]
     public class TypeDataContract : DataContractBase
     {
-        public TypeDataContract(TypeDataContract move)
-        {
-            try
-            {
-                string jsonStr = base.HttpGet(move.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
-
-                TypeDataContract typeData = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
-                SetTypeDataContract(typeData);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally { }
-        }
+        public TypeDataContract() { }
 
         public void SetTypeDataContract(TypeDataContract typeData)
         {
@@ -49,10 +34,7 @@ namespace PokeWrapper.DataContracts
             foreach (var resourceUri in Ineffective)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
-
-                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
             }
             return types;
@@ -64,10 +46,7 @@ namespace PokeWrapper.DataContracts
             foreach (var resourceUri in NoEffect)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
-
-                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
             }
             return types;
@@ -79,10 +58,7 @@ namespace PokeWrapper.DataContracts
             foreach (var resourceUri in Resistance)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
-
-                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
             }
             return types;
@@ -94,10 +70,7 @@ namespace PokeWrapper.DataContracts
             foreach (var resourceUri in SuperEffective)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
-
-                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
             }
             return types;
@@ -109,10 +82,7 @@ namespace PokeWrapper.DataContracts
             foreach (var resourceUri in Weakness)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
-
-                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
             }
             return types;

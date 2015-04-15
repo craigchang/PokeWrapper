@@ -1,4 +1,5 @@
-﻿using PokeWrapper.DataContacts;
+﻿using Newtonsoft.Json;
+using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,24 +14,8 @@ namespace PokeWrapper.DataContracts
     [DataContract]
     public class SpriteDataContract : DataContractBase
     {
-        public SpriteDataContract(SpriteDataContract move)
-        {
-            try
-            {
-                string jsonStr = base.HttpGet(move.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(SpriteDataContract));
-
-                SpriteDataContract spriteData = (SpriteDataContract)jsonSerializer.ReadObject(jsonStream);
-                SetSpriteDataContract(spriteData);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally { }
-        }
-
+        public SpriteDataContract() { }
+        
         public void SetSpriteDataContract(SpriteDataContract spriteData)
         {
             this.Created = spriteData.Created;
@@ -47,10 +32,7 @@ namespace PokeWrapper.DataContracts
         {
             PokemonDataContract pokemon = new PokemonDataContract();
             string jsonStr = base.HttpGet(PokemonResourceUri.ResourceUri);
-            MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
-
-            pokemon = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
+            pokemon = JsonConvert.DeserializeObject<PokemonDataContract>(jsonStr);
 
             Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);
 

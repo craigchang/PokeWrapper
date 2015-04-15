@@ -1,4 +1,5 @@
-﻿using PokeWrapper.DataContacts;
+﻿using Newtonsoft.Json;
+using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,25 +14,7 @@ namespace PokeWrapper.DataContracts
     [DataContract]
     public class EggGroupDataContract : DataContractBase
     {
-        public EggGroupDataContract(EggGroupDataContract description)
-        {
-            this.PokemonResourceUriList = new List<ResourceUriDataContract>();
-
-            try
-            {
-                string jsonStr = base.HttpGet(description.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(EggGroupDataContract));
-
-                EggGroupDataContract eggGroupData = (EggGroupDataContract)jsonSerializer.ReadObject(jsonStream);
-                SetEggGroupDataContract(eggGroupData);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally { }
-        }
+        public EggGroupDataContract() { }
 
         public void SetEggGroupDataContract(EggGroupDataContract eggGroupData)
         {
@@ -49,10 +32,7 @@ namespace PokeWrapper.DataContracts
             foreach (var resourceUri in PokemonResourceUriList)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
-
-                var pokemon = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
+                var pokemon = JsonConvert.DeserializeObject<PokemonDataContract>(jsonStr);
                 pokemonList.Add(pokemon);
 
                 Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);

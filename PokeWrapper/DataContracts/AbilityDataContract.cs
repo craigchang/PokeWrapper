@@ -12,23 +12,7 @@ namespace PokeWrapper.DataContacts
     [DataContract]
     public class AbilityDataContract : DataContractBase
     {
-        public AbilityDataContract(AbilityDataContract ability)
-        {
-            try
-            {
-                string jsonStr = base.HttpGet(ability.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(AbilityDataContract));
-
-                AbilityDataContract abilityData = (AbilityDataContract)jsonSerializer.ReadObject(jsonStream);
-                SetAbilityDataContract(abilityData);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally { }
-        }
+        public AbilityDataContract() { }
 
         public void SetAbilityDataContract(AbilityDataContract abilityData)
         {

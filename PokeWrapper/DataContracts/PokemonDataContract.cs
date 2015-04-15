@@ -1,4 +1,5 @@
-﻿using PokeWrapper.DataContracts;
+﻿using Newtonsoft.Json;
+using PokeWrapper.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -81,10 +82,7 @@ namespace PokeWrapper.DataContacts
             foreach (var resourceUri in AbilityResourceUriList)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(AbilityDataContract));
-
-                var ability = (AbilityDataContract)jsonSerializer.ReadObject(jsonStream);
+                var ability = JsonConvert.DeserializeObject<AbilityDataContract>(jsonStr);
                 abilities.Add(ability);
             }
             return abilities;
@@ -96,10 +94,7 @@ namespace PokeWrapper.DataContacts
             foreach (var resourceUri in DescriptionResourceUriList)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(DescriptionDataContract));
-
-                var description = (DescriptionDataContract)jsonSerializer.ReadObject(jsonStream);
+                var description = JsonConvert.DeserializeObject<DescriptionDataContract>(jsonStr);
                 descriptions.Add(description);
             }
             return descriptions;
@@ -111,10 +106,7 @@ namespace PokeWrapper.DataContacts
             foreach (var resourceUri in EggGroupResourceUriList)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(EggGroupDataContract));
-
-                var eggGroup = (EggGroupDataContract)jsonSerializer.ReadObject(jsonStream);
+                var eggGroup = JsonConvert.DeserializeObject<EggGroupDataContract>(jsonStr);
                 eggGroups.Add(eggGroup);
             }
             return eggGroups;
@@ -126,10 +118,7 @@ namespace PokeWrapper.DataContacts
             foreach (var resourceUri in MoveResourceUriList)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(MoveDataContract));
-
-                var move = (MoveDataContract)jsonSerializer.ReadObject(jsonStream);
+                var move = JsonConvert.DeserializeObject<MoveDataContract>(jsonStr);
                 move.Level = resourceUri.Level;
                 move.LearnType = resourceUri.LearnType;
                 moves.Add(move);
@@ -139,17 +128,14 @@ namespace PokeWrapper.DataContacts
 
         public List<SpriteDataContract> httpGetPokemonSprites()
         {
-            List<SpriteDataContract> abilities = new List<SpriteDataContract>();
+            List<SpriteDataContract> sprites = new List<SpriteDataContract>();
             foreach (var resourceUri in SpriteResourceUriList)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(SpriteDataContract));
-
-                var ability = (SpriteDataContract)jsonSerializer.ReadObject(jsonStream);
-                abilities.Add(ability);
+                var sprite = JsonConvert.DeserializeObject<SpriteDataContract>(jsonStr);
+                sprites.Add(sprite);
             }
-            return abilities;
+            return sprites;
         }
 
         public List<TypeDataContract> httpGetPokemonTypes()
@@ -158,10 +144,7 @@ namespace PokeWrapper.DataContacts
             foreach (var resourceUri in TypeResourceUriList)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(TypeDataContract));
-
-                var type = (TypeDataContract)jsonSerializer.ReadObject(jsonStream);
+                var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
             }
             return types;

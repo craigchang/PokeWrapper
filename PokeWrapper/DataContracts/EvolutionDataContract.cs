@@ -1,4 +1,5 @@
-﻿using PokeWrapper.DataContacts;
+﻿using Newtonsoft.Json;
+using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,9 +14,7 @@ namespace PokeWrapper.DataContracts
     [DataContract]
     public class EvolutionDataContract : DataContractBase
     {
-        public EvolutionDataContract(EvolutionDataContract description)
-        {
-        }
+        public EvolutionDataContract() { }
 
         public void SetEvolutionDataContract(EvolutionDataContract evolutionData)
         {
@@ -29,10 +28,7 @@ namespace PokeWrapper.DataContracts
         {
             PokemonDataContract pokemon = new PokemonDataContract();
             string jsonStr = base.HttpGet(ResourceUri);
-            MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
-
-            pokemon = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
+            pokemon = JsonConvert.DeserializeObject<PokemonDataContract>(jsonStr);
 
             Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);
 

@@ -11,23 +11,7 @@ namespace PokeWrapper.DataContracts
     [DataContract]
     public class MoveDataContract : DataContractBase
     {
-        public MoveDataContract(MoveDataContract move)
-        {
-            try
-            {
-                string jsonStr = base.HttpGet(move.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(MoveDataContract));
-
-                MoveDataContract moveData = (MoveDataContract)jsonSerializer.ReadObject(jsonStream);
-                SetMoveDataContract(moveData);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally { }
-        }
+        public MoveDataContract() { }
 
         public void SetMoveDataContract(MoveDataContract moveData)
         {

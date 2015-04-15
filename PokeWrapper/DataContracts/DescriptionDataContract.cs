@@ -1,4 +1,5 @@
-﻿using PokeWrapper.DataContacts;
+﻿using Newtonsoft.Json;
+using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,25 +14,7 @@ namespace PokeWrapper.DataContracts
     [DataContract]
     public class DescriptionDataContract : DataContractBase
     {
-        public DescriptionDataContract(DescriptionDataContract description)
-        {
-            this.GameResourceUriList = new List<ResourceUriDataContract>();
-
-            try
-            {
-                string jsonStr = base.HttpGet(description.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(DescriptionDataContract));
-
-                DescriptionDataContract descriptionData = (DescriptionDataContract)jsonSerializer.ReadObject(jsonStream);
-                SetDescriptionDataContract(descriptionData);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally { }
-        }
+        public DescriptionDataContract() { }
 
         public void SetDescriptionDataContract(DescriptionDataContract descriptionData)
         {
@@ -51,10 +34,7 @@ namespace PokeWrapper.DataContracts
             foreach (var resourceUri in GameResourceUriList)
             {
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(GameDataContract));
-
-                var game = (GameDataContract)jsonSerializer.ReadObject(jsonStream);
+                var game = JsonConvert.DeserializeObject<GameDataContract>(jsonStr);
                 gameList.Add(game);
 
                 Debug.WriteLine("Game Id: " + game.Id + ", Game Name: " + game.Name);
@@ -66,10 +46,7 @@ namespace PokeWrapper.DataContracts
         {
             PokemonDataContract pokemon = new PokemonDataContract();
             string jsonStr = base.HttpGet(PokemonResourceUri.ResourceUri);
-            MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
-
-            pokemon = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
+            pokemon = JsonConvert.DeserializeObject<PokemonDataContract>(jsonStr);
 
             Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);
 

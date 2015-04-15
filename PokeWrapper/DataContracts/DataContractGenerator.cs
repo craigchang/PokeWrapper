@@ -1,4 +1,5 @@
-﻿using PokeWrapper.DataContacts;
+﻿using Newtonsoft.Json;
+using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,45 +30,27 @@ namespace PokeWrapper.DataContracts
             {
                 case "Pokedex":
                     jsonStr = HttpGet("api/v1/pokedex/1");
-                    jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                    jsonSerializer = new DataContractJsonSerializer(typeof(PokedexDataContract));
-                    dcb = (PokedexDataContract)jsonSerializer.ReadObject(jsonStream);
+                    dcb = JsonConvert.DeserializeObject<PokedexDataContract>(jsonStr);
                     break;
                 case "Pokemon":
                     jsonStr = HttpGet(url);
-                    jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                    jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
-                    dcb = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
+                    dcb = JsonConvert.DeserializeObject<PokemonDataContract>(jsonStr);
                     break;
                 case "Ability":
                     jsonStr = HttpGet(url);
-                    jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                    jsonSerializer = new DataContractJsonSerializer(typeof(AbilityDataContract));
-                    dcb = (AbilityDataContract)jsonSerializer.ReadObject(jsonStream);
+                    dcb = JsonConvert.DeserializeObject<AbilityDataContract>(jsonStr);
                     break;
                 case "Description":
                     jsonStr = HttpGet(url);
-                    jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                    jsonSerializer = new DataContractJsonSerializer(typeof(DescriptionDataContract));
-                    dcb = (DescriptionDataContract)jsonSerializer.ReadObject(jsonStream);
+                    dcb = JsonConvert.DeserializeObject<DescriptionDataContract>(jsonStr);
                     break;
                 case "EggGroup":
                     jsonStr = HttpGet(url);
-                    jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                    jsonSerializer = new DataContractJsonSerializer(typeof(EggGroupDataContract));
-                    dcb = (EggGroupDataContract)jsonSerializer.ReadObject(jsonStream);
-                    break;
-                case "Evolution":
-                    jsonStr = HttpGet(url);
-                    jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                    jsonSerializer = new DataContractJsonSerializer(typeof(EvolutionDataContract));
-                    dcb = (EvolutionDataContract)jsonSerializer.ReadObject(jsonStream);
+                    dcb = JsonConvert.DeserializeObject<EggGroupDataContract>(jsonStr);
                     break;
                 case "Move":
                     jsonStr = HttpGet(url);
-                    jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                    jsonSerializer = new DataContractJsonSerializer(typeof(MoveDataContract));
-                    dcb = (MoveDataContract)jsonSerializer.ReadObject(jsonStream);
+                    dcb = JsonConvert.DeserializeObject<MoveDataContract>(jsonStr);
                     break;
                 default:
                     dcb = null;
