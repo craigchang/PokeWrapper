@@ -12,19 +12,15 @@ using System.Threading.Tasks;
 
 namespace PokeWrapper.DataContracts
 {
-    public class DataContractGenerator
+    public static class DataContractGenerator
     {
         private const string BaseUrl = "http://pokeapi.co/";
-        private string jsonStr;
-        private MemoryStream jsonStream;
-        private DataContractJsonSerializer jsonSerializer;
-        private DataContractBase dcb;
+        private static string jsonStr;
+        private static MemoryStream jsonStream;
+        private static DataContractJsonSerializer jsonSerializer;
+        private static DataContractBase dcb;
 
-        public DataContractGenerator() 
-        {
-        }
-
-        public DataContractBase getInstance(string dataContractType,  string url)
+        public static DataContractBase getInstance(string dataContractType,  string url)
         {
             switch (dataContractType)
             {
@@ -60,7 +56,7 @@ namespace PokeWrapper.DataContracts
             return dcb;
         }
 
-        public string HttpGet(string url)
+        private static string HttpGet(string url)
         {
             HttpClient httpClient = getHttpClient();
 
@@ -85,7 +81,7 @@ namespace PokeWrapper.DataContracts
             }
         }
 
-        public HttpClient getHttpClient()
+        private static HttpClient getHttpClient()
         {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(BaseUrl);

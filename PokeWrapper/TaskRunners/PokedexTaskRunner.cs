@@ -18,8 +18,7 @@ namespace PokeWrapper.TaskRunners
     {
         static void Main(string[] args)
         {
-            DataContractGenerator dcf = new DataContractGenerator();
-            PokedexDataContract pokedex = (PokedexDataContract)dcf.getInstance("Pokedex", string.Empty);
+            PokedexDataContract pokedex = (PokedexDataContract) DataContractGenerator.getInstance("Pokedex", string.Empty);
 
             List<PokemonDataContract> pokemonList = pokedex.httpGetPokemonList();
 
