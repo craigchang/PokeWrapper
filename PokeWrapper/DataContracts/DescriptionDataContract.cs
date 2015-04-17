@@ -25,7 +25,7 @@ namespace PokeWrapper.DataContracts
             this.Modified = descriptionData.Modified;
             this.Name = descriptionData.Name;
             this.PokemonResourceUri = descriptionData.PokemonResourceUri;
-            this.ResourceUri = descriptionData.ResourceUri;
+            this.DescriptionResourceUri = descriptionData.DescriptionResourceUri;
         }
 
         public List<GameDataContract> httpGetGameList()
@@ -53,8 +53,19 @@ namespace PokeWrapper.DataContracts
             return pokemon;
         }
 
+        public DescriptionDataContract httpGetDescription()
+        {
+            DescriptionDataContract description = new DescriptionDataContract();
+            string jsonStr = base.HttpGet(DescriptionResourceUri);
+            description = JsonConvert.DeserializeObject<DescriptionDataContract>(jsonStr);
+
+            Debug.WriteLine("Description Id: " + description.Id + ", Description Name: " + description.Name);
+
+            return description;
+        }
+
         [DataMember(Name = "created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [DataMember(Name = "description")]
         public string Description { get; set; }
@@ -66,7 +77,7 @@ namespace PokeWrapper.DataContracts
         public int Id { get; set; }
 
         [DataMember(Name = "modified")]
-        public string Modified { get; set; }
+        public DateTime? Modified { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
@@ -75,6 +86,6 @@ namespace PokeWrapper.DataContracts
         public ResourceUriDataContract PokemonResourceUri { get; set; }
 
         [DataMember(Name = "resource_uri")]
-        public string ResourceUri { get; set; }
+        public string DescriptionResourceUri { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace PokeWrapper.DataContracts
         public const string BaseUrl = "http://pokeapi.co/";
         private const int MaxResponseContentBufferSize = 256000;
 
-        private HttpClient httpClient;
         private HttpResponseMessage response;
         private HttpClient pokeApiHttpClient;
         private static MediaTypeWithQualityHeaderValue mediaType = new MediaTypeWithQualityHeaderValue("application/json");
@@ -34,9 +33,12 @@ namespace PokeWrapper.DataContracts
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadAsStringAsync().Result;
             }
-            catch (Exception e)
+            catch (HttpRequestException hre)
             {
-                throw e;
+                throw hre;
+            }
+            finally
+            {
             }
         }
 

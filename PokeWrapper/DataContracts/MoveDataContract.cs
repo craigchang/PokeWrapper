@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -24,9 +26,20 @@ namespace PokeWrapper.DataContracts
             this.Name = moveData.Name;
             this.Power = moveData.Power;
             this.PP = moveData.PP;
-            this.ResourceUri = moveData.ResourceUri;
+            this.MoveResourceUri = moveData.MoveResourceUri;
             this.LearnType = moveData.LearnType;
             this.Level = moveData.Level;
+        }
+
+        public MoveDataContract httpGetGame()
+        {
+            MoveDataContract move = new MoveDataContract();
+            string jsonStr = base.HttpGet(MoveResourceUri);
+            move = JsonConvert.DeserializeObject<MoveDataContract>(jsonStr);
+
+            Debug.WriteLine("Move Id: " + move.Id + ", Move Name: " + move.Name);
+
+            return move;
         }
 
         [DataMember(Name = "accuracy")]
@@ -36,7 +49,7 @@ namespace PokeWrapper.DataContracts
         public string Category { get; set; }
 
         [DataMember(Name = "created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [DataMember(Name = "description")]
         public string Description { get; set; }
@@ -45,7 +58,7 @@ namespace PokeWrapper.DataContracts
         public int Id { get; set; }
 
         [DataMember(Name = "modified")]
-        public string Modified { get; set; }
+        public DateTime? Modified { get; set; }
 
         [DataMember(Name = "name")]
         public string Name;
@@ -57,7 +70,7 @@ namespace PokeWrapper.DataContracts
         public int PP { get; set; }
 
         [DataMember(Name = "resource_uri")]
-        public string ResourceUri;
+        public string MoveResourceUri;
 
         [DataMember(Name = "learn_type")]
         public string LearnType { get; set; }

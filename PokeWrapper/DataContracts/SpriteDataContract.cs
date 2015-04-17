@@ -25,7 +25,7 @@ namespace PokeWrapper.DataContracts
             this.Name = spriteData.Name;
             this.PokemonResourceUri = spriteData.PokemonResourceUri;
             this.Name = spriteData.Name;
-            this.ResourceUri = spriteData.ResourceUri;
+            this.SpriteResourceUri = spriteData.SpriteResourceUri;
         }
 
         public PokemonDataContract httpGetPokemon()
@@ -39,8 +39,19 @@ namespace PokeWrapper.DataContracts
             return pokemon;
         }
 
+        public SpriteDataContract httpGetSprite()
+        {
+            SpriteDataContract sprite = new SpriteDataContract();
+            string jsonStr = base.HttpGet(SpriteResourceUri);
+            sprite = JsonConvert.DeserializeObject<SpriteDataContract>(jsonStr);
+
+            Debug.WriteLine("Pokemon Id: " + sprite.Id + ", Pokemon Name: " + sprite.Name);
+
+            return sprite;
+        }
+
         [DataMember(Name = "created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [DataMember(Name = "id")]
         public int Id { get; set; }
@@ -49,7 +60,7 @@ namespace PokeWrapper.DataContracts
         public string Image { get; set; }
 
         [DataMember(Name = "modified")]
-        public string Modified { get; set; }
+        public DateTime? Modified { get; set; }
 
         [DataMember(Name = "name")]
         public string Name;
@@ -58,6 +69,6 @@ namespace PokeWrapper.DataContracts
         public ResourceUriDataContract PokemonResourceUri { get; set; }
 
         [DataMember(Name = "resource_uri")]
-        public string ResourceUri;
+        public string SpriteResourceUri;
     }
 }

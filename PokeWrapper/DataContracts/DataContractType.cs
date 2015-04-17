@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokeWrapper.DataContracts
 {
-    public enum DataContractEnum
+    public enum DataContractType
     {
         Undefined,
         Pokedex,

@@ -41,7 +41,7 @@ namespace PokeWrapper.DataContracts
         [DataMember(Name = "method")]
         public string Method { get; set; }
 
-        [DataMember(Name = "resource_uri")] // pokemon resourceUri
+        [DataMember(Name = "resource_uri")]
         public string ResourceUri { get; set; }
 
         [DataMember(Name = "to")]

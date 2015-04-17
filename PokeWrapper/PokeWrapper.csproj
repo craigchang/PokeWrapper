@@ -69,7 +69,7 @@
   <ItemGroup>
     <Compile Include="DataContracts\AbilityDataContract.cs" />
     <Compile Include="DataContracts\DataContractBase.cs" />
-    <Compile Include="DataContracts\DataContractEnum.cs" />
+    <Compile Include="DataContracts\DataContractType.cs" />
     <Compile Include="DataContracts\DataContractGenerator.cs" />
     <Compile Include="DataContracts\DescriptionDataContract.cs" />
     <Compile Include="DataContracts\EggGroupDataContract.cs" />

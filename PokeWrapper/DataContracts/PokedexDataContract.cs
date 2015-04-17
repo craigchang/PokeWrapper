@@ -21,7 +21,7 @@ namespace PokeWrapper.DataContracts
             this.Created = pokedex.Created;
             this.Modified = pokedex.Modified;
             this.Name = pokedex.Name;
-            this.ResourceUri = pokedex.ResourceUri;
+            this.PokedexResourceUri = pokedex.PokedexResourceUri;
             this.PokemonResourceUriList = pokedex.PokemonResourceUriList;
         }
 
@@ -39,11 +39,22 @@ namespace PokeWrapper.DataContracts
             return pokemonList;
         }
 
+        public PokedexDataContract httpGetPokedex()
+        {
+            PokedexDataContract pokedex = new PokedexDataContract();
+            string jsonStr = base.HttpGet(PokedexResourceUri);
+            pokedex = JsonConvert.DeserializeObject<PokedexDataContract>(jsonStr);
+
+            Debug.WriteLine("Pokedex Id: " + 1 + ", Pokedex Name: " + pokedex.Name);
+
+            return pokedex;
+        }
+
         [DataMember(Name = "created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [DataMember(Name = "modified")]
-        public string Modified { get; set; }
+        public DateTime? Modified { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
@@ -52,6 +63,6 @@ namespace PokeWrapper.DataContracts
         public List<ResourceUriDataContract> PokemonResourceUriList { get; set; }
 
         [DataMember(Name = "resource_uri")]
-        public string ResourceUri { get; set; }
+        public string PokedexResourceUri { get; set; }
     }
 }

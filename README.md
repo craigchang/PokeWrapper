@@ -34,16 +34,16 @@ This json structure will be modeled in the following way in a C# object:
         public AbilityDataContract() { }
 
         [DataMember(Name = "created")]
-        public string Created;
+        public DateTime? Created;
 
         [DataMember(Name = "description")]
         public string Description;
 
         [DataMember(Name = "id")]
-        public string Id;
+        public int Id;
 
         [DataMember(Name = "modified")]
-        public string Modified;
+        public DateTime? Modified;
 
         [DataMember(Name = "name")]
         public string Name;

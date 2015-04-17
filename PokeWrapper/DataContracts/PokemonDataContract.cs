@@ -2,6 +2,7 @@
 using PokeWrapper.DataContracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -17,32 +18,6 @@ namespace PokeWrapper.DataContacts
     public class PokemonDataContract : DataContractBase
     {
         public PokemonDataContract() { }
-
-        public PokemonDataContract(PokemonDataContract pokemon)
-        {
-            this.AbilityResourceUriList = new List<ResourceUriDataContract>();
-            this.DescriptionResourceUriList = new List<ResourceUriDataContract>();
-            this.EggGroupResourceUriList = new List<ResourceUriDataContract>();
-            this.EvolutionList = new List<EvolutionDataContract>();
-            this.MoveResourceUriList = new List<ResourceUriDataContract>();
-            this.SpriteResourceUriList = new List<ResourceUriDataContract>();
-            this.TypeResourceUriList = new List<ResourceUriDataContract>();
-
-            try
-            {
-                string jsonStr = base.HttpGet(pokemon.ResourceUri);
-                MemoryStream jsonStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(PokemonDataContract));
-
-                PokemonDataContract pokedexData = (PokemonDataContract)jsonSerializer.ReadObject(jsonStream);
-                SetPokemonDataContract(pokedexData);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally { }
-        }
 
         public void SetPokemonDataContract(PokemonDataContract pokemon) {
             this.AbilityResourceUriList = pokemon.AbilityResourceUriList;
@@ -66,7 +41,7 @@ namespace PokeWrapper.DataContacts
             this.Name = pokemon.Name;
             this.NationalId = pokemon.NationalId;
             this.PkdxId = pokemon.PkdxId;
-            this.ResourceUri = pokemon.ResourceUri;
+            this.PokemonResourceUri = pokemon.PokemonResourceUri;
             this.SpAtk = pokemon.SpAtk;
             this.SpDef = pokemon.SpDef;
             this.Speed = pokemon.Speed;
@@ -84,6 +59,8 @@ namespace PokeWrapper.DataContacts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var ability = JsonConvert.DeserializeObject<AbilityDataContract>(jsonStr);
                 abilities.Add(ability);
+
+                Debug.WriteLine("Ability Id: " + ability.Id + ", Pokemon Name: " + ability.Name);
             }
             return abilities;
         }
@@ -96,6 +73,8 @@ namespace PokeWrapper.DataContacts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var description = JsonConvert.DeserializeObject<DescriptionDataContract>(jsonStr);
                 descriptions.Add(description);
+
+                Debug.WriteLine("Description Id: " + description.Id + ", Description Name: " + description.Name);
             }
             return descriptions;
         }
@@ -108,6 +87,8 @@ namespace PokeWrapper.DataContacts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var eggGroup = JsonConvert.DeserializeObject<EggGroupDataContract>(jsonStr);
                 eggGroups.Add(eggGroup);
+
+                Debug.WriteLine("Egg Group Id: " + eggGroup.Id + ", Egg Group Name: " + eggGroup.Name);
             }
             return eggGroups;
         }
@@ -122,8 +103,21 @@ namespace PokeWrapper.DataContacts
                 move.Level = resourceUri.Level;
                 move.LearnType = resourceUri.LearnType;
                 moves.Add(move);
+
+                Debug.WriteLine("Move Id: " + move.Id + ", Move Name: " + move.Name);
             }
             return moves;
+        }
+
+        public PokemonDataContract httpGetPokemon()
+        {
+            PokemonDataContract pokemon = new PokemonDataContract();
+            string jsonStr = base.HttpGet(PokemonResourceUri);
+            pokemon = JsonConvert.DeserializeObject<PokemonDataContract>(jsonStr);
+
+            Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);
+
+            return pokemon;
         }
 
         public List<SpriteDataContract> httpGetPokemonSprites()
@@ -134,6 +128,8 @@ namespace PokeWrapper.DataContacts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var sprite = JsonConvert.DeserializeObject<SpriteDataContract>(jsonStr);
                 sprites.Add(sprite);
+
+                Debug.WriteLine("Sprite Id: " + sprite.Id + ", Sprite Name: " + sprite.Name);
             }
             return sprites;
         }
@@ -146,6 +142,8 @@ namespace PokeWrapper.DataContacts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
+
+                Debug.WriteLine("Type Id: " + type.Id + ", Type Name: " + type.Name);
             }
             return types;
         }
@@ -160,7 +158,7 @@ namespace PokeWrapper.DataContacts
         public int CatchRate { get; set; }
 
         [DataMember(Name = "created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [DataMember(Name = "defense")]
         public int Defense { get; set; }
@@ -199,7 +197,7 @@ namespace PokeWrapper.DataContacts
         public string MaleFemaleRatio { get; set; }
 
         [DataMember(Name = "modified")]
-        public string Modified { get; set; }
+        public DateTime? Modified { get; set; }
 
         [DataMember(Name = "moves")]
         public List<ResourceUriDataContract> MoveResourceUriList { get; set; }
@@ -214,7 +212,7 @@ namespace PokeWrapper.DataContacts
         public int PkdxId { get; set; }
 
         [DataMember(Name = "resource_uri")]
-        public string ResourceUri { get; set; }
+        public string PokemonResourceUri { get; set; }
 
         [DataMember(Name = "sp_atk")]
         public int SpAtk { get; set; }

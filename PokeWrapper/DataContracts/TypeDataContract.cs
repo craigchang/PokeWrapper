@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -23,7 +24,7 @@ namespace PokeWrapper.DataContracts
             this.Name = typeData.Name;
             this.NoEffect = typeData.NoEffect;
             this.Resistance = typeData.Resistance;
-            this.ResourceUri = typeData.ResourceUri;
+            this.TypeResourceUri = typeData.TypeResourceUri;
             this.SuperEffective = typeData.SuperEffective;
             this.Weakness = typeData.Weakness;
         }
@@ -36,6 +37,8 @@ namespace PokeWrapper.DataContracts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
+
+                Debug.WriteLine("Type Id: " + type.Id + ", Type Name: " + type.Name);
             }
             return types;
         }
@@ -48,6 +51,8 @@ namespace PokeWrapper.DataContracts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
+
+                Debug.WriteLine("Type Id: " + type.Id + ", Type Name: " + type.Name);
             }
             return types;
         }
@@ -60,9 +65,22 @@ namespace PokeWrapper.DataContracts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
+
+                Debug.WriteLine("Type Id: " + type.Id + ", Type Name: " + type.Name);
             }
             return types;
         }
+
+        public TypeDataContract httpGetSprite()
+        {
+            TypeDataContract type = new TypeDataContract();
+            string jsonStr = base.HttpGet(TypeResourceUri);
+            type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
+
+            Debug.WriteLine("Type Id: " + type.Id + ", Type Name: " + type.Name);
+
+            return type;
+        } 
 
         public List<TypeDataContract> httpGetSuperEffectiveTypes()
         {
@@ -72,6 +90,8 @@ namespace PokeWrapper.DataContracts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
+
+                Debug.WriteLine("Type Id: " + type.Id + ", Type Name: " + type.Name);
             }
             return types;
         }
@@ -84,12 +104,14 @@ namespace PokeWrapper.DataContracts
                 string jsonStr = base.HttpGet(resourceUri.ResourceUri);
                 var type = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
                 types.Add(type);
+
+                Debug.WriteLine("Type Id: " + type.Id + ", Type Name: " + type.Name);
             }
             return types;
         }
 
         [DataMember(Name = "created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [DataMember(Name = "id")]
         public int Id { get; set; }
@@ -98,7 +120,7 @@ namespace PokeWrapper.DataContracts
         public List<ResourceUriDataContract> Ineffective { get; set; }
 
         [DataMember(Name = "modified")]
-        public string Modified { get; set; }
+        public DateTime? Modified { get; set; }
 
         [DataMember(Name = "name")]
         public string Name;
@@ -110,7 +132,7 @@ namespace PokeWrapper.DataContracts
         public List<ResourceUriDataContract> Resistance { get; set; }
 
         [DataMember(Name = "resource_uri")]
-        public string ResourceUri;
+        public string TypeResourceUri;
 
         [DataMember(Name = "super_effective")]
         public List<ResourceUriDataContract> SuperEffective { get; set; }

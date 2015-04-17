@@ -23,7 +23,7 @@ namespace PokeWrapper.DataContracts
             this.Modified = eggGroupData.Modified;
             this.Name = eggGroupData.Name;
             this.PokemonResourceUriList = eggGroupData.PokemonResourceUriList;
-            this.ResourceUri = eggGroupData.ResourceUri;
+            this.EggGroupResourceUri = eggGroupData.EggGroupResourceUri;
         }
 
         public List<PokemonDataContract> httpGetPokemonList()
@@ -40,14 +40,25 @@ namespace PokeWrapper.DataContracts
             return pokemonList;
         }
 
+        public EggGroupDataContract httpGetEggGroup()
+        {
+            EggGroupDataContract eggGroup = new EggGroupDataContract();
+            string jsonStr = base.HttpGet(EggGroupResourceUri);
+            eggGroup = JsonConvert.DeserializeObject<EggGroupDataContract>(jsonStr);
+
+            Debug.WriteLine("Egg Group Id: " + eggGroup.Id + ", Egg Group Name: " + eggGroup.Name);
+
+            return eggGroup;
+        }
+
         [DataMember(Name = "created")]
-        public string Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [DataMember(Name = "id")]
         public int Id { get; set; }
 
         [DataMember(Name = "modified")]
-        public string Modified { get; set; }
+        public DateTime? Modified { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
@@ -56,6 +67,6 @@ namespace PokeWrapper.DataContracts
         public List<ResourceUriDataContract> PokemonResourceUriList { get; set; }
 
         [DataMember(Name = "resource_uri")]
-        public string ResourceUri;
+        public string EggGroupResourceUri;
     }
 }

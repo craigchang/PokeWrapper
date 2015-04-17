@@ -1,4 +1,5 @@
-﻿using PokeWrapper.DataContacts;
+﻿using Newtonsoft.Json;
+using PokeWrapper.DataContacts;
 using PokeWrapper.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace PokeWrapper.TaskRunners
     {
         static void Main(string[] args)
         {
-            PokedexDataContract pokedex = (PokedexDataContract) DataContractGenerator.getInstance("Pokedex", string.Empty);
+            PokedexDataContract pokedex = (PokedexDataContract) DataContractGenerator.getInstance(DataContractType.Pokedex, 1);
 
             List<PokemonDataContract> pokemonList = pokedex.httpGetPokemonList();
 
