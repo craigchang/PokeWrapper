@@ -19,19 +19,29 @@ namespace PokeWrapper.TaskRunners
     {
         static void Main(string[] args)
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             PokedexDataContract pokedex = (PokedexDataContract) DataContractGenerator.getInstance(DataContractType.Pokedex, 1);
 
-            List<PokemonDataContract> pokemonList = pokedex.httpGetPokemonList();
+            stopWatch.Stop();
 
-            foreach (PokemonDataContract pokemon in pokemonList)
-            {
-                List<AbilityDataContract> abilities = pokemon.httpGetPokemonAbilities();
-                List<DescriptionDataContract> descriptions = pokemon.httpGetPokemonDescriptions();
-                List<EggGroupDataContract> eggGroups = pokemon.httpGetPokemonEggGroups();
-                List<MoveDataContract> moves = pokemon.httpGetPokemonMoves();
-                List<SpriteDataContract> sprites = pokemon.httpGetPokemonSprites();
-                List<TypeDataContract> types = pokemon.httpGetPokemonTypes();
-            }
+            TimeSpan ts = stopWatch.Elapsed;
+
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
+            Console.WriteLine("RunTime: " + elapsedTime);
+
+            //List<PokemonDataContract> pokemonList = pokedex.httpGetPokemonList();
+
+            //foreach (PokemonDataContract pokemon in pokemonList)
+            //{
+            //    List<AbilityDataContract> abilities = pokemon.httpGetPokemonAbilities();
+            //    List<DescriptionDataContract> descriptions = pokemon.httpGetPokemonDescriptions();
+            //    List<EggGroupDataContract> eggGroups = pokemon.httpGetPokemonEggGroups();
+            //    List<MoveDataContract> moves = pokemon.httpGetPokemonMoves();
+            //    List<SpriteDataContract> sprites = pokemon.httpGetPokemonSprites();
+            //    List<TypeDataContract> types = pokemon.httpGetPokemonTypes();
+            //}
         }
     }
 }
