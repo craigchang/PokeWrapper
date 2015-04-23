@@ -26,8 +26,13 @@ namespace PokeWrapper.UnitTests
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
             Debug.WriteLine("RunTime: " + elapsedTime);
 
+            int dateCompare = DateTime.Compare( (DateTime) pokedex.Modified, new DateTime(2013, 11, 10, 0, 0, 0, 0));
+            Assert.IsTrue(dateCompare > 0);
+
             Assert.IsTrue(pokedex.Name == "national");
+
             Assert.IsTrue(pokedex.PokedexResourceUri == "/api/v1/pokedex/1/");
+
             Assert.IsTrue(pokedex.PokemonResourceUriList.Count == 778);
         }
     }
