@@ -37,9 +37,11 @@ namespace PokeWrapper.UnitTests
             Assert.IsTrue(pokedex.PokedexResourceUri == "/api/v1/pokedex/1/");
             Assert.IsTrue(pokedex.PokemonResourceUriList.Count == 778);
 
-            ExcelFileHandler excelFileHandler = new ExcelFileHandler("TestResults.xlsx");
+            ExcelFileHandler excelFileHandler = null;
 
             try {
+                excelFileHandler = new ExcelFileHandler("TestResults.xlsx");
+
                 excelFileHandler.SetCellValue(1, 1, "Created");
                 excelFileHandler.SetCellValue(1, 2, "Modified");
                 excelFileHandler.SetCellValue(1, 3, "Name");
@@ -60,11 +62,12 @@ namespace PokeWrapper.UnitTests
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Unable to create Excel Application for the following reason: " + e.StackTrace);
+                Debug.WriteLine("Unable to create the Excel File for the following reason: " + e.StackTrace);
             }
             finally
             {
-                excelFileHandler.Close();
+                if (excelFileHandler != null)
+                    excelFileHandler.Close();
             }
         }
     }
