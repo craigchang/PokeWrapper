@@ -34,7 +34,7 @@ namespace PokeWrapper
             Assert.IsTrue(pokedex.PokedexResourceUri == "/api/v1/pokedex/1/");
             Assert.IsTrue(pokedex.PokemonResourceUriList.Count == 778);
 
-            ExcelFileHandler excelFileHandler = new ExcelFileHandler("TestResults.xlsx");
+            ExcelFileHandler excelFileHandler = new ExcelFileHandler("PokedexUnitTest.xlsx");
 
             try {
                 excelFileHandler.SetCellValue(1, 1, "Created");
