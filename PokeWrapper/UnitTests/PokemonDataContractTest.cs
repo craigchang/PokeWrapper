@@ -30,6 +30,11 @@ namespace PokeWrapper.UnitTests
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
             Debug.WriteLine("RunTime: " + elapsedTime);
 
+            generateReport(pokemonList, elapsedTime);
+        }
+
+        public void generateReport(List<PokemonDataContract> pokemonList, string elapsedTime)
+        {
             ExcelFileHandler excelFileHandler = null;
 
             try

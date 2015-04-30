@@ -37,12 +37,15 @@ namespace PokeWrapper.UnitTests
             Assert.IsTrue(pokedex.PokedexResourceUri == "/api/v1/pokedex/1/");
             Assert.IsTrue(pokedex.PokemonResourceUriList.Count == 778);
 
-            string test = Environment.CurrentDirectory;
-            string test2 = AppDomain.CurrentDomain.BaseDirectory;
+            generateReport(pokedex, elapsedTime);
+        }
 
+        public void generateReport(PokedexDataContract pokedex, string elapsedTime)
+        {
             ExcelFileHandler excelFileHandler = null;
 
-            try {
+            try
+            {
                 excelFileHandler = new ExcelFileHandler("PokedexUnitTestResults.xlsx");
 
                 excelFileHandler.SetCellValue(1, 1, "Created");
