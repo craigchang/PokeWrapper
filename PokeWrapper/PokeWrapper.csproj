@@ -85,6 +85,7 @@
     <Compile Include="DataContracts\TypeDataContract.cs" />
     <Compile Include="PokeWrapperMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\TypeDataContractTest.cs" />
     <Compile Include="UnitTests\PokedexDataContractTest.cs" />
     <Compile Include="UnitTests\PokemonDataContractTest.cs" />
     <Compile Include="UnitTests\SampleDBTest.cs" />

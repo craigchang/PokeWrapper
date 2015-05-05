@@ -55,7 +55,7 @@ This json structure will be modeled in the following way in a C# object:
 
 Each data contract object extends a base model (DataContractBase) that provides an HTTP GET method, which returns the response as a JSON string. The subclass that inherits the base model is responsible for deserializing the JSON string into the appropriate subclass object.
 
-The DataContractGenerator class uses the factory pattern to generate data contract objects based on the common base class DataContractBase. The getInstance() method will return any data contract object based on specific paramters. For example, in "http://pokeapi.co/api/v1/ability/1",  the id would be 1 and you would need to specify the correct enumerated value "Ability" in the DataContractEnum. Since the subclass of the returned data contract object is unknown, you would need to assign the correct subclass object.
+The DataContractGenerator class generates data contract objects based on the common base class DataContractBase. The getInstance() method will return any data contract object based on specific paramters. For example, in "http://pokeapi.co/api/v1/ability/1",  the id would be 1 and you would need to specify the correct enumerated value "Ability" in the DataContractEnum. Since the subclass of the returned data contract object is unknown, you would need to assign the correct subclass object.
 
 ```C#
 

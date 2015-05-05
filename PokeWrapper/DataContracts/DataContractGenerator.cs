@@ -69,6 +69,10 @@ namespace PokeWrapper.DataContracts
                         jsonStr = HttpGet(GameRelativeUrl + id);
                         dcb = JsonConvert.DeserializeObject<GameDataContract>(jsonStr);
                         break;
+                    case DataContractType.Type:
+                        jsonStr = HttpGet(TypeRelativeUrl + id);
+                        dcb = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
+                        break;
                     default:
                         dcb = null;
                         break;
