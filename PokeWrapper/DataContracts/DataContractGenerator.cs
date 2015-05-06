@@ -30,6 +30,7 @@ namespace PokeWrapper.DataContracts
         private static DataContractBase dcb;
         private static HttpClient pokeApiHttpClient = new HttpClient();
         private static HttpResponseMessage response = new HttpResponseMessage();
+        private static MediaTypeWithQualityHeaderValue mediaType = new MediaTypeWithQualityHeaderValue("application/json");
 
         public static DataContractBase getInstance(DataContractType dataContractType,  int id)
         {
@@ -107,13 +108,14 @@ namespace PokeWrapper.DataContracts
 
         private static HttpClient getHttpClientSettings()
         {
-            pokeApiHttpClient.BaseAddress = new Uri(BaseUrl);
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(BaseUrl);
 
-            pokeApiHttpClient.MaxResponseContentBufferSize = 256000;
-            pokeApiHttpClient.DefaultRequestHeaders.Accept.Clear();
-            pokeApiHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.MaxResponseContentBufferSize = 256000;
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(mediaType);
 
-            return pokeApiHttpClient;
+            return httpClient;
         }
     }
 }
