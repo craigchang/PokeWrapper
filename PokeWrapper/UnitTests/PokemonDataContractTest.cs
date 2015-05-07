@@ -20,7 +20,7 @@ namespace PokeWrapper.UnitTests
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            PokedexDataContract pokedex = (PokedexDataContract)DataContractGenerator.getInstance(DataContractType.Pokedex, 1);
+            PokedexDataContract pokedex = DataContractGenerator<PokedexDataContract>.getInstance(1);
 
             List<PokemonDataContract> pokemonList = pokedex.httpGetPokemonList();
 

@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeWrapper", "PokeWrapper\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{52E1DA13-E0BA-4833-9196-2F867498A0DB}"
 	ProjectSection(SolutionItems) = preProject
+		PokeWrapper\.runsettings = PokeWrapper\.runsettings
 		README.md = README.md
 	EndProjectSection
 EndProject

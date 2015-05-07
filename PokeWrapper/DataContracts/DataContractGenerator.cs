@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PokeWrapper.DataContracts
 {
-    public static class DataContractGenerator
+    public static class DataContractGenerator<T>
     {
         private const string BaseUrl = "http://pokeapi.co/";
         private const string PokedexRelativeUrl = "api/v1/pokedex/1";
@@ -32,60 +32,38 @@ namespace PokeWrapper.DataContracts
         private static HttpResponseMessage response = new HttpResponseMessage();
         private static MediaTypeWithQualityHeaderValue mediaType = new MediaTypeWithQualityHeaderValue("application/json");
 
-        public static DataContractBase getInstance(DataContractType dataContractType,  int id)
+        public static T getInstance(int id)
         {
             try
             {
-                switch (dataContractType)
-                {
-                    case DataContractType.Pokedex:
-                        jsonStr = HttpGet(PokedexRelativeUrl);
-                        dcb = JsonConvert.DeserializeObject<PokedexDataContract>(jsonStr);
-                        break;
-                    case DataContractType.Pokemon:
-                        jsonStr = HttpGet(PokemonRelativeUrl + id);
-                        dcb = JsonConvert.DeserializeObject<PokemonDataContract>(jsonStr);
-                        break;
-                    case DataContractType.Ability:
-                        jsonStr = HttpGet(AbilityRelativeUrl + id);
-                        dcb = JsonConvert.DeserializeObject<AbilityDataContract>(jsonStr);
-                        break;
-                    case DataContractType.Description:
-                        jsonStr = HttpGet(DescriptionRelativeUrl + id);
-                        dcb = JsonConvert.DeserializeObject<DescriptionDataContract>(jsonStr);
-                        break;
-                    case DataContractType.EggGroup:
-                        jsonStr = HttpGet(EggGroupRelativeUrl + id);
-                        dcb = JsonConvert.DeserializeObject<EggGroupDataContract>(jsonStr);
-                        break;
-                    case DataContractType.Move:
-                        jsonStr = HttpGet(MoveRelativeUrl + id);
-                        dcb = JsonConvert.DeserializeObject<MoveDataContract>(jsonStr);
-                        break;
-                    case DataContractType.Sprite:
-                        jsonStr = HttpGet(SpriteRelativeUrl + id);
-                        dcb = JsonConvert.DeserializeObject<SpriteDataContract>(jsonStr);
-                        break;
-                    case DataContractType.Game:
-                        jsonStr = HttpGet(GameRelativeUrl + id);
-                        dcb = JsonConvert.DeserializeObject<GameDataContract>(jsonStr);
-                        break;
-                    case DataContractType.Type:
-                        jsonStr = HttpGet(TypeRelativeUrl + id);
-                        dcb = JsonConvert.DeserializeObject<TypeDataContract>(jsonStr);
-                        break;
-                    default:
-                        dcb = null;
-                        break;
-                }
+                if (typeof(PokedexDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(PokedexRelativeUrl);
+                else if (typeof(PokemonDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(PokemonRelativeUrl);
+                else if (typeof(TypeDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(TypeRelativeUrl);
+                else if (typeof(AbilityDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(AbilityRelativeUrl);
+                else if (typeof(DescriptionDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(DescriptionRelativeUrl);
+                else if (typeof(EggGroupDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(EggGroupRelativeUrl);
+                else if (typeof(MoveDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(MoveRelativeUrl);
+                else if (typeof(SpriteDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(SpriteRelativeUrl);
+                else if (typeof(GameDataContract).IsAssignableFrom(typeof(T)))
+                    jsonStr = HttpGet(GameRelativeUrl);
+                else
+                    throw new Exception("Invalid Data Contract!");
+
+                return JsonConvert.DeserializeObject<T>(jsonStr);
             }
             catch (HttpRequestException hre)
             {
                 Debug.WriteLine("Exception detected: " + hre.StackTrace);
-                return null;
+                return default(T);
             }
-
-            return dcb;
         }
 
         private static string HttpGet(string url)

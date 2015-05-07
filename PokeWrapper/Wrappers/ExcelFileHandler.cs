@@ -20,7 +20,8 @@ namespace PokeWrapper.Wrappers
 
         public ExcelFileHandler(string fileName)
         {
-            this.filePath = Environment.CurrentDirectory + "\\" + fileName;
+            //this.filePath = Environment.CurrentDirectory + "\\" + fileName;
+            this.filePath = fileName;
 
             try
             {

@@ -36,7 +36,7 @@ namespace PokeWrapper.DataContracts
 
                 Debug.WriteLine("Pokemon Id: " + pokemon.PkdxId + ", Pokemon Name: " + pokemon.Name);
             }
-            return pokemonList;
+            return pokemonList.OrderBy(p => p.PkdxId).ToList();
         }
 
         public PokedexDataContract httpGetPokedex()

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace PokeWrapper.UnitTests
 {
     [TestClass]
+    [DeploymentItem(@"Testfiles\")]
     public class PokedexDataContractTest
     {
         [TestMethod]
@@ -21,7 +22,7 @@ namespace PokeWrapper.UnitTests
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            PokedexDataContract pokedex = (PokedexDataContract)DataContractGenerator.getInstance(DataContractType.Pokedex, 1);
+            PokedexDataContract pokedex = DataContractGenerator<PokedexDataContract>.getInstance(1);
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;

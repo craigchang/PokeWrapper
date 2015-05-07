@@ -26,7 +26,7 @@ namespace PokeWrapper.UnitTests
 
             for (int i = 1; i <= 20; i++)
             {
-                type = (TypeDataContract)DataContractGenerator.getInstance(DataContractType.Type, i);
+                type = (TypeDataContract)DataContractGenerator<TypeDataContract>.getInstance(i);
                 if (type != null)
                     typeList.Add(type);
             }
