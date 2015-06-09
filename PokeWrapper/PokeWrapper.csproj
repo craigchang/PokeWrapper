@@ -68,10 +68,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Pokedex.cs" />
     <Compile Include="DataContracts\AbilityDataContract.cs" />
     <Compile Include="DataContracts\DataContractBase.cs" />
     <Compile Include="DataContracts\DataContractType.cs" />
-    <Compile Include="DataContracts\DataContractGenerator.cs" />
+    <Compile Include="API\DataContractGenerator.cs" />
     <Compile Include="DataContracts\DescriptionDataContract.cs" />
     <Compile Include="DataContracts\EggGroupDataContract.cs" />
     <Compile Include="DataContracts\EvolutionDataContract.cs" />
@@ -85,9 +86,10 @@
     <Compile Include="DataContracts\TypeDataContract.cs" />
     <Compile Include="PokeWrapperMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTests\TypeDataContractTest.cs" />
-    <Compile Include="UnitTests\PokedexDataContractTest.cs" />
-    <Compile Include="UnitTests\PokemonDataContractTest.cs" />
+    <Compile Include="UnitTests\API\APIUnitTest.cs" />
+    <Compile Include="UnitTests\DataContracts\TypeDataContractTest.cs" />
+    <Compile Include="UnitTests\DataContracts\PokedexDataContractTest.cs" />
+    <Compile Include="UnitTests\DataContracts\PokemonDataContractTest.cs" />
     <Compile Include="UnitTests\SampleDBTest.cs" />
     <Compile Include="Wrappers\ExcelFileHandler.cs" />
   </ItemGroup>

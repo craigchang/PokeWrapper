@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PokeWrapper.DataContacts;
+using PokeWrapper.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokeWrapper.DataContracts
+namespace PokeWrapper.API
 {
     public static class DataContractGenerator<T>
     {
@@ -27,7 +28,6 @@ namespace PokeWrapper.DataContracts
         private const string GameRelativeUrl = "api/v1/game/";
 
         private static string jsonStr;
-        private static DataContractBase dcb;
         private static HttpClient pokeApiHttpClient = new HttpClient();
         private static HttpResponseMessage response = new HttpResponseMessage();
         private static MediaTypeWithQualityHeaderValue mediaType = new MediaTypeWithQualityHeaderValue("application/json");
