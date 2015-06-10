@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokeWrapper.API;
+using PokeWrapper.DataContacts;
 using PokeWrapper.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,22 @@ namespace PokeWrapper.UnitTests
             Assert.IsTrue(pokedex.Name == "national");
             Assert.IsTrue(pokedex.PokedexResourceUri == "/api/v1/pokedex/1/");
             Assert.IsTrue(pokedex.PokemonResourceUriList.Count == 778);
+        }
+
+        [TestMethod]
+        public void PokemonAPI_UnitTest()
+        {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            PokemonDataContract pokemon = Pokemon.getInstance(1);
+
+            stopWatch.Stop();
+
+            TimeSpan ts = stopWatch.Elapsed;
+
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}:{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
+            Debug.WriteLine("RunTime: " + elapsedTime);
         }
     }
 }

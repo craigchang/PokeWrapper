@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Pokemon.cs" />
     <Compile Include="API\Pokedex.cs" />
     <Compile Include="DataContracts\AbilityDataContract.cs" />
     <Compile Include="DataContracts\DataContractBase.cs" />
