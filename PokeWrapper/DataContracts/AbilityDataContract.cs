@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
-namespace PokeWrapper.DataContacts
+namespace PokeWrapper.DataContracts
 {
     [DataContract]
     public class AbilityDataContract : DataContractBase

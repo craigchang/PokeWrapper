@@ -12,7 +12,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokeWrapper.DataContacts
+namespace PokeWrapper.DataContracts
 {
     [DataContract]
     public class PokemonDataContract : DataContractBase

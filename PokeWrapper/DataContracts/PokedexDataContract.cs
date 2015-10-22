@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PokeWrapper.DataContacts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

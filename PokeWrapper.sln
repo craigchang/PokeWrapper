@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeWrapper", "PokeWrapper\PokeWrapper.csproj", "{BCB77319-D498-44B6-86AF-271ABEE28DD4}"
 EndProject
@@ -9,6 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		PokeWrapper\.runsettings = PokeWrapper\.runsettings
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokedexWindowsForm", "PokedexWindowsForm\PokedexWindowsForm.csproj", "{5C4B130C-F9D1-43D4-9206-9E1F1FEDA93E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BCB77319-D498-44B6-86AF-271ABEE28DD4} = {BCB77319-D498-44B6-86AF-271ABEE28DD4}
 	EndProjectSection
 EndProject
 Global
@@ -21,6 +26,10 @@ Global
 		{BCB77319-D498-44B6-86AF-271ABEE28DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB77319-D498-44B6-86AF-271ABEE28DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB77319-D498-44B6-86AF-271ABEE28DD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C4B130C-F9D1-43D4-9206-9E1F1FEDA93E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C4B130C-F9D1-43D4-9206-9E1F1FEDA93E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C4B130C-F9D1-43D4-9206-9E1F1FEDA93E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C4B130C-F9D1-43D4-9206-9E1F1FEDA93E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

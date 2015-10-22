@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokeWrapper.API;
-using PokeWrapper.DataContacts;
 using PokeWrapper.DataContracts;
 using PokeWrapper.Wrappers;
 using System;

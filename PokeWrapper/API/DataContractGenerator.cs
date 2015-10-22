@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PokeWrapper.DataContacts;
 using PokeWrapper.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -39,21 +38,21 @@ namespace PokeWrapper.API
                 if (typeof(PokedexDataContract).IsAssignableFrom(typeof(T)))
                     jsonStr = HttpGet(PokedexRelativeUrl);
                 else if (typeof(PokemonDataContract).IsAssignableFrom(typeof(T)))
-                    jsonStr = HttpGet(PokemonRelativeUrl);
+                    jsonStr = HttpGet(PokemonRelativeUrl + id);
                 else if (typeof(TypeDataContract).IsAssignableFrom(typeof(T)))
-                    jsonStr = HttpGet(TypeRelativeUrl);
+                    jsonStr = HttpGet(TypeRelativeUrl + id);
                 else if (typeof(AbilityDataContract).IsAssignableFrom(typeof(T)))
-                    jsonStr = HttpGet(AbilityRelativeUrl);
+                    jsonStr = HttpGet(AbilityRelativeUrl + id);
                 else if (typeof(DescriptionDataContract).IsAssignableFrom(typeof(T)))
-                    jsonStr = HttpGet(DescriptionRelativeUrl);
+                    jsonStr = HttpGet(DescriptionRelativeUrl + id);
                 else if (typeof(EggGroupDataContract).IsAssignableFrom(typeof(T)))
-                    jsonStr = HttpGet(EggGroupRelativeUrl);
+                    jsonStr = HttpGet(EggGroupRelativeUrl + id);
                 else if (typeof(MoveDataContract).IsAssignableFrom(typeof(T)))
-                    jsonStr = HttpGet(MoveRelativeUrl);
+                    jsonStr = HttpGet(MoveRelativeUrl + id);
                 else if (typeof(SpriteDataContract).IsAssignableFrom(typeof(T)))
-                    jsonStr = HttpGet(SpriteRelativeUrl);
+                    jsonStr = HttpGet(SpriteRelativeUrl + id);
                 else if (typeof(GameDataContract).IsAssignableFrom(typeof(T)))
-                    jsonStr = HttpGet(GameRelativeUrl);
+                    jsonStr = HttpGet(GameRelativeUrl + id);
                 else
                     throw new Exception("Invalid Data Contract!");
 
